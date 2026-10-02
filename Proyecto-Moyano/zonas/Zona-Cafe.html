@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café Zócalo — Simulación de operación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="/zonas/styles (1).css">
+</head>
+<body>
+
+<div class="ruidoFondo" aria-hidden="true"></div>
+
+<header class="encabezado">
+  <div class="marca">
+    <span class="marcaIcono"><i class="fa-solid fa-mug-saucer"></i></span>
+    <div class="marcaTexto">
+      <h1>Zona Café</h1>
+      <p>Motor de simulación — entidades &amp; algoritmos</p>
+    </div>
+  </div>
+  <div class="estadoGlobal">
+    <div class="reloj">
+      <span class="relojEtiqueta">Hora sim.</span>
+      <span id="relojValor">08:00</span>
+    </div>
+    <div class="letrero" id="letreroEstado" data-estado="cerrado">
+      <span class="letreroLuz"></span>
+      <span id="letreroTexto">CERRADO</span>
+    </div>
+  </div>
+</header>
+
+<main class="contenedor">
+
+  <!-- FASE 1: PREPARACIÓN -->
+  <section class="panel panelPreparacion" id="seccionPreparacion" aria-labelledby="tituloPreparacion">
+    <div class="panelCabecera">
+      <span class="panelNumero">Fase 01</span>
+      <h2 id="tituloPreparacion">Antes de abrir</h2>
+      <p class="panelDescripcion">Algoritmo secuencial con puertas de dependencia: cada tarea desbloquea la siguiente. El local no abre hasta completar las cuatro.</p>
+    </div>
+    <div class="tareas" id="listaTareas">
+      <!-- generado por JS -->
+    </div>
+    <button class="botonAbrir" id="botonAbrirLocal" disabled>
+      <i class="fa-solid fa-door-open"></i> Abrir local
+    </button>
+  </section>
+
+  <!-- OPERACIÓN -->
+  <section class="panel panelOperacion oculto" id="seccionOperacion" aria-labelledby="tituloOperacion">
+
+    <div class="filaSuperior">
+      <!-- SALÓN / MESAS -->
+      <div class="bloque bloqueSalon">
+        <div class="bloqueCabecera">
+          <span class="panelNumero">Fase 02</span>
+          <h2>Salón — asignación de mesas</h2>
+          <p class="panelDescripcion">Algoritmo de mejor ajuste (best-fit): entre las mesas libres, elige la de menor capacidad que alcance para el grupo.</p>
+        </div>
+        <div class="salonGrid" id="salonGrid"><!-- mesas generadas por JS --></div>
+      </div>
+
+      <!-- COLA DE CLIENTES -->
+      <div class="bloque bloqueCola">
+        <div class="bloqueCabecera">
+          <span class="panelNumero">Fase 03</span>
+          <h2>Puerta — recepción</h2>
+          <p class="panelDescripcion">Cola FIFO de clientes esperando mesa disponible.</p>
+        </div>
+        <button class="botonAccion" id="botonNuevoCliente">
+          <i class="fa-solid fa-person-walking-arrow-right"></i> Ingresa cliente
+        </button>
+        <ul class="colaLista" id="colaClientesLista">
+          <li class="colaVacia">Sin clientes esperando</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="filaInferior">
+      <!-- BARRA / PREPARACIÓN -->
+      <div class="bloque bloqueBarra">
+        <div class="bloqueCabecera">
+          <span class="panelNumero">Fase 04</span>
+          <h2>Barra — cola de preparación</h2>
+          <p class="panelDescripcion">Cola FIFO de pedidos. Tiempo total = suma de sub-tareas (moler, extraer espresso, texturizar leche, calentar). Un solo barista, procesa en orden de llegada.</p>
+        </div>
+        <div class="cintaBarra" id="cintaBarra">
+          <div class="cintaVacia">La barra está tranquila</div>
+        </div>
+      </div>
+
+      <!-- REGISTRO -->
+      <div class="bloque bloqueLog">
+        <div class="bloqueCabecera">
+          <span class="panelNumero">Log</span>
+          <h2>Registro de eventos</h2>
+        </div>
+        <div class="logConsola" id="logConsola"></div>
+      </div>
+    </div>
+
+    <div class="metricas" id="metricas">
+      <div class="metrica">
+        <span class="metricaValor" id="metricaClientes">0</span>
+        <span class="metricaEtiqueta">clientes atendidos</span>
+      </div>
+      <div class="metrica">
+        <span class="metricaValor" id="metricaVentas">$0</span>
+        <span class="metricaEtiqueta">recaudado</span>
+      </div>
+      <div class="metrica">
+        <span class="metricaValor" id="metricaEspera">0</span>
+        <span class="metricaEtiqueta">en espera</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <p>Simulación académica — entidades: Insumo, Espacio, Menú, Cliente, Mesa, Pedido, Cuenta. Algoritmos: gate secuencial, best-fit de mesas, cola FIFO de preparación.</p>
+</footer>
+
+<script src="/zonas/script.js"></script>
+</body>
+</html>
